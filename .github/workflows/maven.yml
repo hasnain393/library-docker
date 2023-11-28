@@ -36,7 +36,7 @@ jobs:
         docker build -t library:latest .
 
     # Optional: Push Docker Image to Registry
-    - name: Push Docker Image to Registry
+    - name: Push Docker latest Image to Registry 
       run: |
         echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
         docker push library:latest
