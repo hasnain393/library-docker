@@ -8,8 +8,11 @@
 6. docker network ls
 7. docker network create spring-net
 8. docker run -d -p 3307:3306 --name mysqldb --network spring-net -v mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=library mysql:8.0
+9. or
+10. sudo docker run -d -p 3307:3306 --name mysqldb --network spring-net -v mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_USER=admin -e MYSQL_PASSWORD=root -e DATABASE_PORT=3306 -e DATABASE_HOST=docker-mysql -e MYSQL_DATABASE=library mysql:8.0
+     
 
-9. open mysql workbench and create a new connection to mysql container
+12. open mysql workbench and create a new connection to mysql container
 
 ![image](https://github.com/hasnain393/library-docker/assets/56108097/162afbfc-aac7-4204-8890-7aaa838b4c7b)
 
