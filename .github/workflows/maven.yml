@@ -12,6 +12,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Build Project
+      run: mvn clean install -DskipTests
     - name: Login Dockerhub
       env:
         DOCKER_USERNAME: ${{secrets.DOCKER_HUB_USERNAME}}
