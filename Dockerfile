@@ -1,11 +1,13 @@
-# Use OpenJDK 8 as the base image
-FROM openjdk:8-jdk-alpine
-
+# Stage 1: Build the application
+FROM maven:3.8.4-openjdk-17 AS build
 WORKDIR /app
-COPY target/library-0.0.1-SNAPSHOT.jar library-0.0.1-SNAPSHOT.jar
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean install
 
-# Expose the port that your application uses
+# Stage 2: Run the application
+FROM openjdk:17-alpine
+WORKDIR /app
+COPY --from=build /app/target/aws-0.0.1-SNAPSHOT.jar ./library-0.0.1-SNAPSHOT.jar
 EXPOSE 9195
-
-# Run the jar file
-ENTRYPOINT ["java", "-jar", "/library-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "library-0.0.1-SNAPSHOT.jar"]
