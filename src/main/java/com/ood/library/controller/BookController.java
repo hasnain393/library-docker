@@ -19,7 +19,6 @@ import com.ood.library.service.BookService;
 @RestController
 @RequestMapping("/api")
 public class BookController {
-
     @Autowired
     private BookService bookService;
     
