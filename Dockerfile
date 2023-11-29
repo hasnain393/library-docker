@@ -6,7 +6,7 @@ COPY src ./src
 RUN mvn clean install
 
 # Stage 2: Run the application
-FROM openjdk:11
+FROM adoptopenjdk/openjdk11:jre-11.0.6_10-alpine
 WORKDIR /app
 COPY --from=build /app/target/library-0.0.1-SNAPSHOT.jar ./library-0.0.1-SNAPSHOT.jar
 EXPOSE 9195
