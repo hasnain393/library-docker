@@ -25,6 +25,7 @@ jobs:
     - name: Push to Dockerhub
       run: docker push hasnains312/library:latest 
 
+
   deploy:
     needs: build
     runs-on: [aws-ec2]
