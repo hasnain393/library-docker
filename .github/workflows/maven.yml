@@ -30,8 +30,8 @@ jobs:
     runs-on: [aws-ec2]
     steps:
       - name: Pull Image from docker hub
-        run: docker pull hasnains312/library:latest
+        run: sudo docker pull hasnains312/library:latest
       - name: Delete old container
-        run: docker rm -f library
+        run: sudo docker rm -f library
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name library hasnains312/library
+        run: sudo docker run -d -p 8080:8080 --name library hasnains312/library
