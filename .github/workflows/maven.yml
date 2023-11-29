@@ -21,4 +21,4 @@ jobs:
     - name: Build the Docker image
       run: docker build -t hasnains312/library .
     - name: Push to Dockerhub
-      run: docker push varsubham/library:latest
+      run: docker push hasnains312/library:latest
