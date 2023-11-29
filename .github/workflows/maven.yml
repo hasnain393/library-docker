@@ -1,48 +1,24 @@
-name: Java CI with Maven and Docker
+name: CI Pipeline
 
 on:
   push:
     branches: [ "main" ]
 
 jobs:
-  build-and-deploy:
-    runs-on: self-hosted
+
+  build:
+
+    runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Check if JDK 11 is set up
-      id: check-jdk
-      run: |
-        if java -version 2>&1 | grep -q "11"; then
-          echo "::set-output name=setup-needed::false"
-        else
-          echo "::set-output name=setup-needed::true"
-        fi
-
-    - name: Set up JDK 11
-      if: steps.check-jdk.outputs.setup-needed == 'true'
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: maven
-
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-
-    # Docker build step
-    - name: Build Docker Image
-      run: |
-        docker build -t library:latest .
-
-    # Optional: Push Docker Image- to Registry
-    - name: Push Docker latest Image to Registry 
-      run: |
-        echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-        docker push library:latest
-
-    # Run Docker image on EC2
-    - name: Deploy to EC2
-      run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@${{secrets.EC2_IP}} "docker pull library:latest &&  docker run -p 9196:9195 --name app --net spring-net -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_HOST=mysqldb -e MYSQL_PORT=3306 app"
- 
+    - uses: actions/checkout@v3
+    - name: Login Dockerhub
+      env:
+        DOCKER_USERNAME: ${{secrets.DOCKER_HUB_USERNAME}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
+      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      
+    - name: Build the Docker image
+      run: docker build -t hasnains312/library .
+    - name: Push to Dockerhub
+      run: docker push varsubham/library:latest
