@@ -33,6 +33,6 @@ jobs:
       - name: Pull Image from docker hub
         run: sudo docker pull hasnains312/library:latest
       - name: Delete old container
-        run: sudo docker rm -f library
+        run: sudo docker rm -f app
       - name: Run docker container
-        run: sudo docker run -d -p 8080:8080 --name library hasnains312/library
+        run: sudo docker run -d  -p 9196:9195 --name app --net spring-net -e MYSQL_USER=admin -e MYSQL_PASSWORD=root -e MYSQL_HOST=mysqldb -e MYSQL_PORT=3306 hasnains312/library
