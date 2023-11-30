@@ -18,6 +18,8 @@
 
 ![image](https://github.com/hasnain393/library-docker/assets/56108097/6ec091e7-b792-4fb2-b798-cc7701560ea1)
 
+![image](https://github.com/hasnain393/library-docker/assets/56108097/4f04fc5f-7d70-4a85-b2d0-83842e9dadf2)
+
 
 these environment variables values will be repleaced in application.properties file
 10. docker run -p 9196:9195 --name app --net spring-net -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_HOST=mysqldb -e MYSQL_PORT=3306 app
