@@ -23,16 +23,15 @@ jobs:
     - name: Build the Docker image
       run: docker build -t hasnains312/library .
     - name: Push to Dockerhub
-      run: docker push hasnains312/library:${GITHUB_SHA::8} 
+      run: docker push hasnains312/library:latest 
 
   deploy:
     needs: build
     runs-on: [aws-ec2]
     steps:
       - name: Pull Image from docker hub
-        run: sudo docker pull hasnains312/library:${GITHUB_SHA::8}
+        run: sudo docker pull hasnains312/library:latest
       - name: Delete old container
-        #run: sudo docker rm -f app
-        run: docker remove $(docker ps -a -q)
+        run: sudo docker rm -f app
       - name: Run docker container
         run: sudo docker run -d  -p 9196:9195 --name app --net spring-net -e MYSQL_USER=admin -e MYSQL_PASSWORD=root -e MYSQL_HOST=mysqldb -e MYSQL_PORT=3306 hasnains312/library
